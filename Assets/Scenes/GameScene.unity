@@ -728,12 +728,12 @@ PrefabInstance:
     - target: {fileID: 3072013210434197981, guid: c896775b595a5469eac8f94caabac7dd,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.9461745
+      value: -1.95
       objectReference: {fileID: 0}
     - target: {fileID: 3072013210434197981, guid: c896775b595a5469eac8f94caabac7dd,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.03
       objectReference: {fileID: 0}
     - target: {fileID: 3072013210434197981, guid: c896775b595a5469eac8f94caabac7dd,
         type: 3}
@@ -777,10 +777,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7888773956762365091, guid: c896775b595a5469eac8f94caabac7dd,
         type: 3}
+      propertyPath: testing
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7888773956762365091, guid: c896775b595a5469eac8f94caabac7dd,
+        type: 3}
       propertyPath: KitchenObjectSO
       value: 
       objectReference: {fileID: 11400000, guid: d99e24b8f407d4f7e8508d2453610ffe,
         type: 2}
+    - target: {fileID: 7888773956762365091, guid: c896775b595a5469eac8f94caabac7dd,
+        type: 3}
+      propertyPath: secondClearCounter
+      value: 
+      objectReference: {fileID: 1810211712}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1121,6 +1131,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1810211712 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7888773956762365091, guid: c896775b595a5469eac8f94caabac7dd,
+    type: 3}
+  m_PrefabInstance: {fileID: 204040784}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d9f3c93c398842cc963d138ce9ed8fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
