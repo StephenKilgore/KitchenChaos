@@ -1,35 +1,52 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class ClearCounter : MonoBehaviour
+public class ClearCounter : MonoBehaviour, IKitchenObjectParent
 {
     [SerializeField] private KitchenObjectSO KitchenObjectSO;
     [SerializeField] private Transform counterTopPoint;
-    [SerializeField] private ClearCounter secondClearCounter;
-    [SerializeField] private bool testing;
     
     private KitchenObject kitchenObject;
     
-    public void Interact()
+    public void Interact(Player player)
     {
-        if (testing && Input.GetKeyDown(KeyCode.T))
-        {
-            if (kitchenObject != null)
-            {
-               kitchenObject.SetClearCounter(secondClearCounter);
-               Debug.Log(kitchenObject.GetClearCounter());
-            }
-        }
         if (kitchenObject == null)
         {
             Transform kitchenObjectTransform = Instantiate(KitchenObjectSO.prefab, counterTopPoint);
-            kitchenObjectTransform.localPosition = Vector3.zero;
-            
-            kitchenObject = kitchenObjectTransform.GetComponent<KitchenObject>();
-            kitchenObject.SetClearCounter(this);
-            Debug.Log(kitchenObject.GetClearCounter());
+            kitchenObjectTransform.GetComponent<KitchenObject>().SetKitchenObjectParent(this);
         }
+        else
+        {
+            //give the object to the player
+            kitchenObject.SetKitchenObjectParent(player);
+        }
+    }
+
+    public Transform GetKitchenObjectFolowTransform()
+    {
+        return counterTopPoint;
+    }
+
+    public void SetKitchenObject(KitchenObject kitchenObject)
+    {
+        this.kitchenObject = kitchenObject;
+    }
+
+    public KitchenObject GetKitchenObject()
+    {
+        return this.kitchenObject;
+    }
+
+    public void ClearKitchenObject()
+    {
+        this.kitchenObject = null;
+    }
+
+    public bool HasKitchenObject()
+    {
+        return kitchenObject != null;
     }
 }
