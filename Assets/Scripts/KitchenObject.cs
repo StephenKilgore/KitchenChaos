@@ -55,11 +55,6 @@ public class KitchenObject : MonoBehaviour
     {
         return kitchenObjectSO;
     }
-    public KitchenObjectSO GetCutKitchenObjectSO()
-    {
-        return kitchenObjectSO.cutKitchenObjectSO;
-    }
-
     public static KitchenObject SpawnKitchenObject(KitchenObjectSO kitchenObjectSO, IKitchenObjectParent kitchenObjectParent)
     {
         Transform kitchenObjectTransform = Instantiate(kitchenObjectSO.prefab);
