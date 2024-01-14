@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: Tomato
   m_EditorClassIdentifier: 
   prefab: {fileID: 1317693097894165337, guid: 0b77f1721ca36446f8f3e6e39897c93c, type: 3}
+  isCuttable: 1
+  cutKitchenObjectSO: {fileID: 11400000, guid: df7d3ed0188444cccbbd77ca69b036ac, type: 2}
   sprite: {fileID: 21300000, guid: 91e8fe3de9249fc44b7bdd8050062896, type: 3}
   objectName: Tomato
