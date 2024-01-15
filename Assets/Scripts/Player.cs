@@ -46,7 +46,6 @@ public class Player : MonoBehaviour, IKitchenObjectParent
             selectedCounter.InteractAlternate(this);
         }
     }
-
     private void Update()
     {
         HandleMovement();
@@ -57,7 +56,6 @@ public class Player : MonoBehaviour, IKitchenObjectParent
     {
         return isWalking;
     }
-
     private void HandleInteractions()
     {
         Vector2 inputVector = gameInput.GetMovementVectorNormalized();
