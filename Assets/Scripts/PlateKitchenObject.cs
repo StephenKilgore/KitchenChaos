@@ -49,4 +49,8 @@ public class PlateKitchenObject : KitchenObject
     {
         return kitchenObjectSOList;
     }
+    public bool HasIngredient(KitchenObjectSO ingredient)
+    {
+        return kitchenObjectSOList.Contains(ingredient);
+    }
 }
