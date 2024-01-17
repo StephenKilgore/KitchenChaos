@@ -15,6 +15,9 @@ public class DeliveryManager : MonoBehaviour
 
     public event EventHandler OnRecipeSpawned;
     public event EventHandler OnRecipeDelivered;
+
+    public event EventHandler OnRecipeSuccess;
+    public event EventHandler OnRecipeFailed;
     private void Awake()
     {
         waitingRecipeSOList = new List<RecipeSO>();
@@ -49,10 +52,11 @@ public class DeliveryManager : MonoBehaviour
             {
                 waitingRecipeSOList.RemoveAt(i);
                 OnRecipeDelivered?.Invoke(this, EventArgs.Empty);
+                OnRecipeSuccess?.Invoke(this, EventArgs.Empty);
                 return;
             }
         }
-        Debug.Log("Incorrect recipe!");
+        OnRecipeFailed.Invoke(this, EventArgs.Empty);
     }
 
     private bool CheckRecipeMatchesPlate(RecipeSO waitingRecipe, PlateKitchenObject plateKitchenObject)
