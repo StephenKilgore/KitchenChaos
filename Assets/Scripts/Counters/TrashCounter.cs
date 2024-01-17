@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;   
 
 public class TrashCounter : BaseCounter
 {
+    public static event EventHandler OnAnyObjectTrashed;
     public override void Interact(Player player)
     {
         if (player.HasKitchenObject())
@@ -11,6 +13,7 @@ public class TrashCounter : BaseCounter
             KitchenObject currentObj = player.GetKitchenObject();
 
             currentObj.DestroyKitchenObject();
+            OnAnyObjectTrashed?.Invoke(this, EventArgs.Empty);
         }
     }
 }
