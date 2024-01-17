@@ -42,15 +42,18 @@ public class Player : MonoBehaviour, IKitchenObjectParent
 
     private void GameInputOnonInteractAlternateAction(object sender, EventArgs e)
     {
-        if (selectedCounter != null)
+        if (selectedCounter != null && GameManager.Instance.IsGamePlaying())
         {
             selectedCounter.InteractAlternate(this);
         }
     }
     private void Update()
     {
-        HandleMovement();
-        HandleInteractions();
+        if (GameManager.Instance.GetState() != GameManager.State.GameOver)
+        {
+            HandleMovement();
+            HandleInteractions();
+        }
     }
 
     public bool IsWalking()
@@ -92,7 +95,7 @@ public class Player : MonoBehaviour, IKitchenObjectParent
     }
     private void GameInput_OnInteractionAction(object sender, System.EventArgs e)
     {
-        if (selectedCounter != null)
+        if (selectedCounter != null && GameManager.Instance.IsGamePlaying())
         {
             selectedCounter.Interact(this);
         }
