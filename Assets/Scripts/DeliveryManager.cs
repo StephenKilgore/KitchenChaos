@@ -13,6 +13,11 @@ public class DeliveryManager : MonoBehaviour
     private float spawnRecipeTimerMax = 4f;
     private int waitingRecipesMax = 4;
 
+    public event EventHandler OnRecipeSpawned;
+    public event EventHandler OnRecipeDelivered;
+
+    public event EventHandler OnRecipeSuccess;
+    public event EventHandler OnRecipeFailed;
     private void Awake()
     {
         waitingRecipeSOList = new List<RecipeSO>();
@@ -28,8 +33,9 @@ public class DeliveryManager : MonoBehaviour
             spawnRecipeTimer = spawnRecipeTimerMax;
             if (waitingRecipeSOList.Count < waitingRecipesMax){
                 RecipeSO waitingRecipeSO = recipeListSO.recipeSOList[Random.Range(0, recipeListSO.recipeSOList.Count)];
-                Debug.Log(waitingRecipeSO.recipeName);
                 waitingRecipeSOList.Add(waitingRecipeSO);
+                
+                OnRecipeSpawned?.Invoke(this, EventArgs.Empty);
             }
         }
     }
@@ -44,12 +50,13 @@ public class DeliveryManager : MonoBehaviour
 
             if (plateMatchesRecipe)
             {
-                Debug.Log($"Delivered {recipe.recipeName}");
                 waitingRecipeSOList.RemoveAt(i);
+                OnRecipeDelivered?.Invoke(this, EventArgs.Empty);
+                OnRecipeSuccess?.Invoke(this, EventArgs.Empty);
                 return;
             }
         }
-        Debug.Log("Incorrect recipe!");
+        OnRecipeFailed.Invoke(this, EventArgs.Empty);
     }
 
     private bool CheckRecipeMatchesPlate(RecipeSO waitingRecipe, PlateKitchenObject plateKitchenObject)
@@ -71,5 +78,10 @@ public class DeliveryManager : MonoBehaviour
         }
 
         return plateHasAllIngredients;
+    }
+
+    public List<RecipeSO> GetWaitingRecipes()
+    {
+        return waitingRecipeSOList;
     }
 }
