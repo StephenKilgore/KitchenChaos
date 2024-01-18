@@ -6,6 +6,8 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
    public event EventHandler OnStateChange;
+   public event EventHandler OnGamePaused;
+   public event EventHandler OnGameUnpaused;
 
  
    public enum State
@@ -20,9 +22,10 @@ public class GameManager : MonoBehaviour
    private State state;
    private float waitingToStartTimer = .1f;
    private float countdownToStartTimer = 5f;
-   private float gamePlayingTimerMax = 30f;
+   private float gamePlayingTimerMax = 120f;
    private float currentGamePlayingTimer;
    private int recipesDelivered = 0;
+   private bool isGamePaused = false;
    
 
    private void Awake()
@@ -35,6 +38,12 @@ public class GameManager : MonoBehaviour
    private void Start()
    {
       DeliveryManager.Instance.OnRecipeSuccess += DeliveryManagerOnRecipeSuccess;
+      GameInput.Instance.OnPauseAction += GameInputOnPauseAction;
+   }
+
+   private void GameInputOnPauseAction(object sender, EventArgs e)
+   {
+      TogglePauseGame();
    }
 
    private void DeliveryManagerOnRecipeSuccess(object sender, EventArgs e)
@@ -99,5 +108,20 @@ public class GameManager : MonoBehaviour
    public float GetGameTimeRemainingNormalized()
    {
       return 1 - (currentGamePlayingTimer / gamePlayingTimerMax);
+   }
+
+   public void TogglePauseGame()
+   {
+      isGamePaused = !isGamePaused;
+      if (isGamePaused)
+      {
+         Time.timeScale = 0f;
+         OnGamePaused?.Invoke(this, EventArgs.Empty);
+      }
+      else
+      {
+         Time.timeScale = 1f;
+         OnGameUnpaused?.Invoke(this, EventArgs.Empty);
+      }
    }
 }
