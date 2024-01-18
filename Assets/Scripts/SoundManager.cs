@@ -10,14 +10,17 @@ public class SoundManager : MonoBehaviour
     public static SoundManager Instance { get; private set; }
     
     [SerializeField] private AudioClipRefSO audioClipRefSO;
+
+    private const string PLAYER_PREFS_SOUND_EFFECTS_VOLUME = "SoundEffectsVolume";
+    private float sfxVolume = 1f;
     
-    private void PlaySound(AudioClip audioClip, Vector3 position, float volume=1f)
+    private void PlaySound(AudioClip audioClip, Vector3 position, float volumeMultiplier=1f)
     {
-        AudioSource.PlayClipAtPoint(audioClip, position, volume);
+        AudioSource.PlayClipAtPoint(audioClip, position, sfxVolume);
     }
-    private void PlaySound(AudioClip[] audioClipArray, Vector3 position, float volume=1f)
+    private void PlaySound(AudioClip[] audioClipArray, Vector3 position, float volumeMultiplier=1f)
     {
-        AudioSource.PlayClipAtPoint(audioClipArray[UnityEngine.Random.Range(0, audioClipArray.Length)], position, volume);
+        AudioSource.PlayClipAtPoint(audioClipArray[UnityEngine.Random.Range(0, audioClipArray.Length)], position, sfxVolume*volumeMultiplier);
         
         
     }
@@ -25,6 +28,7 @@ public class SoundManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        sfxVolume = PlayerPrefs.GetFloat(PLAYER_PREFS_SOUND_EFFECTS_VOLUME, 1f);
     }
 
     private void Start()
@@ -72,8 +76,24 @@ public class SoundManager : MonoBehaviour
         PlaySound(audioClipRefSO.deliverySuccess, deliveryCounter.transform.position);
     }
 
-    public void PlayFootstepsSound(Vector3 position, float volume)
+    public void PlayFootstepsSound(Vector3 position, float volumeMultiplier)
     {
-        PlaySound(audioClipRefSO.footsteps, position, volume);
+        PlaySound(audioClipRefSO.footsteps, position, volumeMultiplier*sfxVolume);
+    }
+
+    public void ChangeSFXVolume()
+    {
+        sfxVolume += .1f;
+        if (sfxVolume > 1f)
+        {
+            sfxVolume = 0f;
+        }
+        PlayerPrefs.SetFloat(PLAYER_PREFS_SOUND_EFFECTS_VOLUME, sfxVolume);
+        PlayerPrefs.Save();
+    }
+
+    public float GetSFXVolume()
+    {
+        return sfxVolume;
     }
 }
